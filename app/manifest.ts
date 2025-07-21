@@ -16,11 +16,31 @@ export default function manifest(): MetadataRoute.Manifest {
                 type: "image/png",
             },
             {
-                src: "/web-app-manifest-512x512.png",
+                src: "/icon512_maskable.png",
                 sizes: "512x512",
                 type: "image/png",
             },
 
         ],
+        screenshots: [
+            {
+                "src": "screenshot1.jpg",
+                "type": "image/jpg",
+                "sizes": "1080x1920",
+                "form_factor": "narrow"
+            },
+            {
+                "src": "screenshot2.jpg",
+                "type": "image/jpg",
+                "sizes": "1080x1920",
+                "form_factor": "narrow"
+            },
+            {
+                "src": "screenshot3.jpg",
+                "type": "image/jpg",
+                "sizes": "1080x1920",
+                "form_factor": "wide"
+            }
+        ]
     }
 }
