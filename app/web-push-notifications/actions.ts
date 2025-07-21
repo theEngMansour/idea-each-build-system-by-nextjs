@@ -8,13 +8,41 @@ push.setVapidDetails(
         process.env.VAPID_PRIVATE_KEY!
 )
 
-let subscription: PushSubscription | null = null
+// Store subscription in a more production-ready way
+// In production, you'd use a database instead of a module variable
+let subscription: push.PushSubscription | null = null
+
+// Helper function to convert browser PushSubscription to web-push format
+function convertToWebPushSubscription(browserSub: PushSubscription): push.PushSubscription {
+    const p256dh = browserSub.getKey("p256dh")
+    const auth = browserSub.getKey("auth")
+
+    if (!p256dh || !auth) {
+        throw new Error("Missing required keys in push subscription")
+    }
+
+    return {
+        endpoint: browserSub.endpoint,
+        keys: {
+            p256dh: Buffer.from(p256dh).toString("base64"),
+            auth: Buffer.from(auth).toString("base64"),
+        },
+    }
+}
 
 export async function subscribeUser(sub: PushSubscription) {
-    subscription = sub
-    // In a production environment, you would want to store the subscription in a database
-    // For example: await db.subscriptions.create({ data: sub })
-    return {success: true}
+    try {
+        // Convert browser subscription to web-push format
+        subscription = convertToWebPushSubscription(sub)
+
+        // In a production environment, you would want to store the subscription in a database
+        // For example: await db.subscriptions.create({ data: webPushSub })
+
+        return {success: true}
+    } catch (error) {
+        console.error("Error subscribing user:", error)
+        return {success: false, error: "Failed to subscribe user"}
+    }
 }
 
 export async function unsubscribeUser() {
@@ -31,7 +59,7 @@ export async function sendNotification(message: string) {
 
     try {
         await push.sendNotification(
-                subscription,
+                subscription, // Now this is the correct web-push type
                 JSON.stringify({
                     title: "Test Notification",
                     body: message,
@@ -44,3 +72,4 @@ export async function sendNotification(message: string) {
         return {success: false, error: "Failed to send notification"}
     }
 }
+
