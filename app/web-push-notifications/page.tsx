@@ -95,14 +95,10 @@ function PushNotificationManager() {
 }
 
 function InstallPrompt() {
-    const [isIOS, setIsIOS] = useState(false)
+    const [isIOS] = useState(false)
     const [isStandalone, setIsStandalone] = useState(false)
 
     useEffect(() => {
-        setIsIOS(
-                /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream
-        )
-
         setIsStandalone(window.matchMedia("(display-mode: standalone)").matches)
     }, [])
 
