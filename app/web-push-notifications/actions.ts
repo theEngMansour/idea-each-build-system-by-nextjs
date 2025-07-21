@@ -30,7 +30,7 @@ export async function sendNotification(message: string) {
     }
 
     try {
-        await push.sendNotification(
+        await webpush.sendNotification(
                 subscription,
                 JSON.stringify({
                     title: "Test Notification",
