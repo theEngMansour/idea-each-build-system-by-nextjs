@@ -33,13 +33,13 @@ export default function RootLayout({
                     prefetch={false}
                     href={"/directive-cache"}
                     activeState={
-                        <span className="text-pink-600">activeState</span>
+                        <span className="text-pink-600">Home</span>
                     }
                     pendingState={
-                        <span className="text-muted-foreground flex gap-2 items-center">pendingState</span>
+                        <span className="text-muted-foreground flex gap-2 items-center">Home ..</span>
                     }
             >
-                NavLink
+                Home
             </NavLink>
             <NavLink
                     prefetch={false}
@@ -48,7 +48,7 @@ export default function RootLayout({
                         <span className="text-pink-600">show</span>
                     }
                     pendingState={
-                        <span className="text-muted-foreground flex gap-2 items-center">showpendingState</span>
+                        <span className="text-muted-foreground flex gap-2 items-center">show ..</span>
                     }
             >
                 show
